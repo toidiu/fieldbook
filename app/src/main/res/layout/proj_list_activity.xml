@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    style="@style/AppBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white_15"
+            android:drawableLeft="@drawable/ic_search"
+            android:hint="@string/search_proj_hint"
+            android:lines="1"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"
+            tools:background="@color/colorPrimary" />
+
+        <!--app:layout_scrollFlags="scroll|enterAlways"-->
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_proj_list" />
+
+    <FrameLayout
+        android:id="@+id/sync_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sync_bg_height"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="30dp"
+        android:background="@color/red"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/sync_fab"
+        android:layout_width="@dimen/really_big_fab"
+        android:layout_height="@dimen/really_big_fab"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:src="@drawable/ic_sync"
+        android:visibility="gone"
+        app:backgroundTint="@color/red"
+        app:layout_anchor="@id/sync_bg"
+        app:layout_anchorGravity="top|center_horizontal"
+        tools:visibility="visible" />
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</android.support.design.widget.CoordinatorLayout>

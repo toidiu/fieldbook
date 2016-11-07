@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/share"
+        android:title="Share" />
+
+    <item
+        android:id="@+id/multi_share"
+        android:title="Multi-Share" />
+
+    <item
+        android:id="@+id/print"
+        android:title="Print" />
+
+    <item
+        android:id="@+id/duplicate"
+        android:title="Duplicate" />
+
+</menu>

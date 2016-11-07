@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_50"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/file_name_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_95"
+        android:clickable="true"
+        android:visibility="gone"
+        tools:alpha=".2"
+        tools:visibility="gone">
+
+        <EditText
+            android:id="@+id/file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@color/white_15"
+            android:hint="Enter file name"
+            android:minWidth="200dp"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textCursorDrawable="@null" />
+
+        <Button
+            android:id="@+id/create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/file_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:background="@color/green_border"
+            android:padding="8dp"
+            android:text="Create"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/or_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="or"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/merge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/or_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@color/folder_blue"
+            android:padding="8dp"
+            android:text="Merge"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/po_number_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_95"
+        android:clickable="true"
+        android:visibility="gone"
+        tools:alpha=".2"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/num_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:id="@+id/po_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@color/white_15"
+                android:minWidth="100dp"
+                android:padding="8dp"
+                android:text="49"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textCursorDrawable="@null" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/copy_po"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginLeft="16dp"-->
+                <!--android:layout_marginRight="16dp"-->
+                <!--android:layout_toRightOf="@id/po_number"-->
+                <!--android:background="@color/folder_blue"-->
+                <!--android:padding="8dp"-->
+                <!--android:text="Copied"-->
+                <!--android:textAllCaps="false"-->
+                <!--android:textColor="@color/white" />-->
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/open_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/num_container"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:background="@color/green_border"
+            android:padding="8dp"
+            android:text="Open Purchase Order"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/or_text1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/open_file"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:text="or"-->
+            <!--android:textColor="@color/white" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/cancel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:background="@color/gray_text"-->
+            <!--android:layout_below="@id/or_text1"-->
+            <!--android:padding="8dp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:text="Cancel"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/white" />-->
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</RelativeLayout>

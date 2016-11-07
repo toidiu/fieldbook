@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Field Notebook</string>
+    <string name="search_proj_hint">Enter at least 3 characters</string>
+    <string name="search_archive_hint">Enter at least 3 characters to search Archive</string>
+    <string name="menu_paste">Paste</string>
+    <string name="menu_multi_share">Multi-Share</string>
+    <string name="menu_cancel_share">Cancel Multi Share</string>
+    <string name="menu_archive">Archive</string>
+    <string name="menu_unarchive">UnArchive</string>
+
+    <string name="error_network">Something went wrong. Please check your connection.</string>
+    <string name="no_network">No network connection available.</string>
+    <string name="no_network_merge">Please ensure a network connection before attempting merge.</string>
+    <string name="error_play_services">This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.</string>
+    <string name="menu_claim">Claim</string>
+    <string name="menu_unclaim">Un-Claim</string>
+    <string name="select_picture">Pick or Take Picture</string>
+    <string name="permission_msg">This app needs to access your Google account (via Contacts) and Storage.</string>
+    <string name="install_pdf_msg">Please install an application from the Play Store to edit PDFs (Adobe Acrobat).</string>
+    <string name="install_img_msg">Please install an application from the Play Store to view images (Google Photos).</string>
+
+    <string name="zamzar_started">Dwg conversion started.</string>
+    <string name="zamzar_failed">Dwg file conversion failed.</string>
+    <string name="zamzar_success">Dwg conversion successful.</string>
+</resources>
