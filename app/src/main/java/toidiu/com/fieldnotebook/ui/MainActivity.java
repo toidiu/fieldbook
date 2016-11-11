@@ -76,6 +76,8 @@ public class MainActivity extends Activity implements EasyPermissions.Permission
     ImageView logoView;
     @Bind(R.id.layout)
     View layout;
+    @Bind(R.id.demo_txt)
+    TextView demoOver;
 
     //~=~=~=~=~=~=~=~=~=~=~=~=Fields
     @Inject
@@ -97,7 +99,6 @@ public class MainActivity extends Activity implements EasyPermissions.Permission
 
         if (startDate.plusDays(3).isBefore(DateTime.now())) {
             setContentView(R.layout.main_activity_demo);
-            TextView demoOver = (TextView) findViewById(R.id.demo_over);
             demoOver.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
