@@ -3,7 +3,7 @@
     <solid android:color="@color/transparent" />
     <stroke
         android:width="1dip"
-        android:color="@color/green_border" />
+        android:color="@color/list_item_border" />
     <corners android:radius="10dip" />
     <padding
         android:bottom="0dip"

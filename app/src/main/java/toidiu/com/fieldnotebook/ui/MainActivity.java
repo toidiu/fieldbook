@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -32,6 +33,8 @@ import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +46,8 @@ import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import toidiu.com.fieldnotebook.BuildConfig;
-import toidiu.com.fieldnotebook.R;
 import toidiu.com.fieldnotebook.FieldNotebookApplication;
+import toidiu.com.fieldnotebook.R;
 import toidiu.com.fieldnotebook.actions.BaseAction;
 import toidiu.com.fieldnotebook.models.FileObj;
 import toidiu.com.fieldnotebook.utils.BgImageLoader;
@@ -54,6 +57,7 @@ import toidiu.com.fieldnotebook.utils.Prefs;
 import static android.Manifest.permission.GET_ACCOUNTS;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static toidiu.com.fieldnotebook.utils.Prefs.DEFAULT_START_DEMO;
 
 public class MainActivity extends Activity implements EasyPermissions.PermissionCallbacks {
     //region Fields----------------------
@@ -87,12 +91,33 @@ public class MainActivity extends Activity implements EasyPermissions.Permission
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((FieldNotebookApplication) getApplication()).getAppComponent().inject(this);
-        if (prefs.getBaseFolderId() != null) {
-            startBaseProjActivity();
-            return;
+        Long tempStartDemo = prefs.getStartDemo();
+        Long startDemo = (tempStartDemo == DEFAULT_START_DEMO) ? prefs.setStartDemo() : tempStartDemo;
+        DateTime startDate = new DateTime(new java.util.Date(startDemo));
+
+        if (startDate.plusDays(3).isBefore(DateTime.now())) {
+            setContentView(R.layout.main_activity_demo);
+            TextView demoOver = (TextView) findViewById(R.id.demo_over);
+            demoOver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent emailintent = new Intent(android.content.Intent.ACTION_SEND);
+                    emailintent.setType("plain/text");
+                    emailintent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"toidiu@protonmail.com"});
+                    emailintent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Fieldbook Inquiry");
+                    emailintent.putExtra(Intent.EXTRA_CC, new String[]{"droman6489@gmail.com"});
+                    startActivity(Intent.createChooser(emailintent, "Send mail..."));
+                }
+            });
+
+        } else {
+            if (prefs.getBaseFolderId() != null) {
+                startBaseProjActivity();
+                return;
+            }
+            setContentView(R.layout.main_activity);
         }
 
-        setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         Log.d("log", "-----------1");
         initView();

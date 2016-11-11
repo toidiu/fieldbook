@@ -21,10 +21,14 @@ import butterknife.ButterKnife;
 import toidiu.com.fieldnotebook.R;
 import toidiu.com.fieldnotebook.actions.FindBaseFolderAction;
 import toidiu.com.fieldnotebook.actions.FindBaseFolderAction_.PsFindBaseFolderAction;
+import toidiu.com.fieldnotebook.actions.SetupDemoAction;
+import toidiu.com.fieldnotebook.actions.SetupDemoAction_.PsSetupDemoAction;
 import toidiu.com.fieldnotebook.actions.SetupDriveAction;
 import toidiu.com.fieldnotebook.actions.SetupDriveAction_.PsSetupDriveAction;
 import toidiu.com.fieldnotebook.actions.events.FindBaseFolderActionFailure;
 import toidiu.com.fieldnotebook.actions.events.FindBaseFolderActionSuccess;
+import toidiu.com.fieldnotebook.actions.events.SetupDemoActionFailure;
+import toidiu.com.fieldnotebook.actions.events.SetupDemoActionSuccess;
 import toidiu.com.fieldnotebook.actions.events.SetupDriveActionFailure;
 import toidiu.com.fieldnotebook.actions.events.SetupDriveActionSuccess;
 import toidiu.com.fieldnotebook.models.FileObj;
@@ -33,7 +37,8 @@ import toidiu.com.fieldnotebook.ui.extras.BaseProjListAdapter;
 
 @EventListener(producers = {
         FindBaseFolderAction.class,
-        SetupDriveAction.class
+        SetupDriveAction.class,
+        SetupDemoAction.class
 })
 public class FindBaseProjActivity extends BaseActivity implements BaseProjClickInterface {
 
@@ -60,6 +65,17 @@ public class FindBaseProjActivity extends BaseActivity implements BaseProjClickI
         public void onEventMainThread(FindBaseFolderActionSuccess event) {
             progress.setVisibility(View.GONE);
             adapter.refreshView(Arrays.asList(event.results));
+        }
+
+        @Override
+        public void onEventMainThread(SetupDemoActionSuccess event) {
+            PennStation.requestAction(PsSetupDriveAction.helper(event.baseFolderId));
+        }
+
+        @Override
+        public void onEventMainThread(SetupDemoActionFailure event) {
+            progress.setVisibility(View.GONE);
+            Snackbar.make(progress, R.string.error_network, Snackbar.LENGTH_SHORT).show();
         }
 
         @Override
@@ -98,6 +114,9 @@ public class FindBaseProjActivity extends BaseActivity implements BaseProjClickI
     private void initData() {
         if (prefs.getBaseFolderId() != null) {
             startProjListActivity();
+        } else if (prefs.isDemoMode()) {
+            PennStation.requestAction(PsSetupDemoAction.helper());
+            progress.setVisibility(View.VISIBLE);
         } else {
             PennStation.requestAction(PsFindBaseFolderAction.helper(""));
             progress.setVisibility(View.VISIBLE);
@@ -106,7 +125,11 @@ public class FindBaseProjActivity extends BaseActivity implements BaseProjClickI
 
     private void initView() {
         initBg();
-        toolbar.setTitle("Select Base Folder");
+        if (prefs.isDemoMode()) {
+            toolbar.setTitle("Setting up Demo");
+        } else {
+            toolbar.setTitle("Select Base Folder");
+        }
         setSupportActionBar(toolbar);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

@@ -63,6 +63,7 @@ public class BaseAction extends FullAction {
     public static final String PO_NUMBER_PROPERTY = "po_number";
     public static final String PUBLIC_VISIBILITY = "PUBLIC";
 
+    public static final String DEMO_FOLDER_SETUP = "Fieldbook Demo";
     public static final String ARCHIVE_FOLDER_SETUP = "Archive";
     public static final String PHOTOS_FOLDER_SETUP = "Photos";
     public static final String PO_NUMBER_FOLDER_SETUP = "PoNum - DO NOT DELETE";
@@ -317,6 +318,92 @@ public class BaseAction extends FullAction {
         } else {
             prefs.setPoNumberFolderId(dataFromApi.get(0).id);
             return true;
+        }
+    }
+
+    protected String demoCheckAndCreateBase() {
+        List<FileObj> dataFromApi = getFoldersByName(DEMO_FOLDER_SETUP, "root");
+        String baseId = null;
+        if (dataFromApi.size() == 0) {
+            File archive = new File();
+            archive.setTitle(DEMO_FOLDER_SETUP);
+            archive.setMimeType(FOLDER_MIME);
+
+            try {
+                File file = driveService.files().insert(archive).execute();
+                prefs.setBaseFolderId(file.getId());
+                baseId = file.getId();
+            } catch (IOException e) {
+                Crashlytics.getInstance().core.logException(e);
+            }
+        } else {
+            prefs.setBaseFolderId(dataFromApi.get(0).id);
+            baseId = dataFromApi.get(0).id;
+        }
+
+        //create demo projects
+        List<ParentReference> parents = new ArrayList<>();
+        parents.add(new ParentReference().setId(baseId));
+        demoCheckAndCreateProject("#0001-CompanyA", parents);
+        demoCheckAndCreateProject("#0002-CompanyB", parents);
+
+        return baseId;
+    }
+
+    protected String demoCheckAndCreateProject(String folderName, List<ParentReference> parents) {
+        List<FileObj> dataFromApi = getFoldersByName(folderName, parents.get(0).getId());
+//
+        if (dataFromApi.size() == 0) {
+            File folder = new File();
+            folder.setTitle(folderName);
+            folder.setMimeType(FOLDER_MIME);
+            folder.setParents(parents);
+
+            try {
+                File file = driveService.files().insert(folder).execute();
+                prefs.setBaseFolderId(file.getId());
+
+                //create sub folder
+                List<ParentReference> subParents = new ArrayList<>();
+                subParents.add(new ParentReference().setId(file.getId()));
+                demoCheckAndCreateSubFolders("Notes", subParents);
+                demoCheckAndCreateSubFolders("Fab Sheets", subParents);
+                demoCheckAndCreateSubFolders("Purchase Orders", subParents);
+                demoCheckAndCreateSubFolders("Project Labour Request", subParents);
+                demoCheckAndCreateSubFolders("Billing", subParents);
+                demoCheckAndCreateSubFolders("Photos", subParents);
+
+                return file.getId();
+            } catch (IOException e) {
+                Crashlytics.getInstance().core.logException(e);
+                return null;
+            }
+        } else {
+            prefs.setBaseFolderId(dataFromApi.get(0).id);
+            return dataFromApi.get(0).id;
+        }
+    }
+
+    protected String demoCheckAndCreateSubFolders(String folderName, List<ParentReference> parents) {
+        List<FileObj> dataFromApi = getFoldersByName(folderName, parents.get(0).getId());
+
+        if (dataFromApi.size() == 0) {
+            File folder = new File();
+            folder.setTitle(folderName);
+            folder.setMimeType(FOLDER_MIME);
+            folder.setParents(parents);
+
+            try {
+                File file = driveService.files().insert(folder).execute();
+                prefs.setBaseFolderId(file.getId());
+                return file.getId();
+            } catch (IOException e) {
+                Crashlytics.getInstance().core.logException(e);
+                return null;
+            }
+        } else {
+            prefs.setBaseFolderId(dataFromApi.get(0).id);
+            return dataFromApi.get(0).id;
         }
     }
 
@@ -598,34 +685,34 @@ public class BaseAction extends FullAction {
         return "e-" + biggest;
     }
 
-      @Nullable
-      protected String incrementAndGetPoNumber() {
-          try {
-              // First retrieve the property from the API.
-             Drive.Properties.Get request = driveService.properties().get(prefs.getPoNumberFolderId(), PO_NUMBER_PROPERTY);
-             request.setVisibility(PUBLIC_VISIBILITY);
-             Property property = request.execute();
-             Integer number = Integer.valueOf(property.getValue());
+    @Nullable
+    protected String incrementAndGetPoNumber() {
+        try {
+            // First retrieve the property from the API.
+            Drive.Properties.Get request = driveService.properties().get(prefs.getPoNumberFolderId(), PO_NUMBER_PROPERTY);
+            request.setVisibility(PUBLIC_VISIBILITY);
+            Property property = request.execute();
+            Integer number = Integer.valueOf(property.getValue());
 
-             //update and set new value
-             Integer nextNum = number + 1;
-             property.setValue(String.valueOf(nextNum));
-             Drive.Properties.Update update = driveService.properties().update(prefs.getPoNumberFolderId(), PO_NUMBER_PROPERTY, property);
-             update.setVisibility(PUBLIC_VISIBILITY);
+            //update and set new value
+            Integer nextNum = number + 1;
+            property.setValue(String.valueOf(nextNum));
+            Drive.Properties.Update update = driveService.properties().update(prefs.getPoNumberFolderId(), PO_NUMBER_PROPERTY, property);
+            update.setVisibility(PUBLIC_VISIBILITY);
 
-              //make sure the value was updated
-              String value = update.execute().getValue();
-              if (nextNum == Integer.valueOf(value).intValue() ) {
-                  return String.format("%02d", nextNum);
-              } else {
-                  return null;
-              }
-          } catch (IOException e) {
-              Crashlytics.getInstance().core.logException(e);
-              System.out.println("An error occurred: " + e);
-              return null;
-          }
-      }
+            //make sure the value was updated
+            String value = update.execute().getValue();
+            if (nextNum == Integer.valueOf(value).intValue()) {
+                return String.format("%02d", nextNum);
+            } else {
+                return null;
+            }
+        } catch (IOException e) {
+            Crashlytics.getInstance().core.logException(e);
+            System.out.println("An error occurred: " + e);
+            return null;
+        }
+    }
 
     //endregion
 

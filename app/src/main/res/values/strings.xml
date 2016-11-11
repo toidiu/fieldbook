@@ -22,4 +22,7 @@
     <string name="zamzar_started">Dwg conversion started.</string>
     <string name="zamzar_failed">Dwg file conversion failed.</string>
     <string name="zamzar_success">Dwg conversion successful.</string>
+
+    <!--<string name="demo_over">Demo time expired. \nPlease visit toidiu.com for additional details.</string>-->
+    <string name="demo_over">Your demo has expired. \n\nFor licensing inquiries please contact <a href="mailto:toidiu@protonmail.com?Subject=Fieldbook Inquiry&amp;cc=droman6489@gmail.com" target="_top">toidiu@protonmail.com</a></string>
 </resources>
