@@ -500,7 +500,10 @@ public class ProjDetailActivity extends BaseActivity implements FileClickInterfa
         profileImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fileObj.claimUser.equals(prefs.getUser())) {
+                if(fileObj.claimUser == null){
+                    Snackbar.make(progress, "Unclaimed project", Snackbar.LENGTH_SHORT).show();
+                }
+                else if (fileObj.claimUser.equals(prefs.getUser())) {
                     File externalFile = UtilImage.getTempFile(ProjDetailActivity.this);
                     choosePicture(REQ_CODE_USER_IMG, externalFile);
                 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Field Notebook</string>
+    <string name="app_name">FieldBook</string>
     <string name="search_proj_hint">Enter at least 3 characters</string>
     <string name="search_archive_hint">Enter at least 3 characters to search Archive</string>
     <string name="menu_paste">Paste</string>

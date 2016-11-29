@@ -25,8 +25,8 @@ android {
         applicationId "toidiu.com.fieldnotebook"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 241
-        versionName "2.41"
+        versionCode 300
+        versionName "3.00"
         multiDexEnabled true
     }
 

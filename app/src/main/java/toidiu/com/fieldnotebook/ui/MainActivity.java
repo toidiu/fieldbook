@@ -99,27 +99,26 @@ public class MainActivity extends Activity implements EasyPermissions.Permission
 
         if (startDate.plusDays(3).isBefore(DateTime.now())) {
             setContentView(R.layout.main_activity_demo);
-            ButterKnife.bind(this);
-            demoOver.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent emailintent = new Intent(android.content.Intent.ACTION_SEND);
-                    emailintent.setType("plain/text");
-                    emailintent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"apoorv@toidiu.com"});
-                    emailintent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Fieldbook Inquiry");
-                    emailintent.putExtra(Intent.EXTRA_CC, new String[]{"droman6489@gmail.com"});
-                    startActivity(Intent.createChooser(emailintent, "Send mail..."));
-                }
-            });
-
         } else {
             if (prefs.getBaseFolderId() != null) {
                 startBaseProjActivity();
                 return;
             }
             setContentView(R.layout.main_activity);
-            ButterKnife.bind(this);
         }
+
+        ButterKnife.bind(this);
+        demoOver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailintent = new Intent(android.content.Intent.ACTION_SEND);
+                emailintent.setType("plain/text");
+                emailintent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"apoorv@toidiu.com"});
+                emailintent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Fieldbook Inquiry");
+                emailintent.putExtra(Intent.EXTRA_CC, new String[]{"droman6489@gmail.com"});
+                startActivity(Intent.createChooser(emailintent, "Send mail..."));
+            }
+        });
 
         Log.d("log", "-----------1");
         initView();
